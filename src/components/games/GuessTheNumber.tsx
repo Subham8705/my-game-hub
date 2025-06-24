@@ -54,7 +54,6 @@ export function GuessTheNumber({ onBack }: GuessTheNumberProps) {
     }
   };
 
-  // AI move effect
   useEffect(() => {
     if (gameState.isPlaying && 
         gameState.gameMode === 'computer' && 
@@ -208,7 +207,6 @@ export function GuessTheNumber({ onBack }: GuessTheNumberProps) {
           </div>
         )}
 
-        {/* AI Thinking */}
         {gameState.isPlaying && gameState.gameMode === 'computer' && gameState.currentPlayer === 'Computer' && !gameState.winner && (
           <div className="bg-white rounded-2xl p-8 shadow-lg mb-8">
             <div className="text-center">

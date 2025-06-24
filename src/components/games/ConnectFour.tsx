@@ -45,7 +45,6 @@ export function ConnectFour({ onBack }: ConnectFourProps) {
     }
   };
 
-  // AI move effect
   useEffect(() => {
     if (gameState.isPlaying && 
         gameState.gameMode === 'computer' && 
