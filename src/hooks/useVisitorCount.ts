@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { Counter } from "counterapi";
 
-// Initialize the Counter client with your public workspace slug
 const counterClient = new Counter({
-  workspace: "gamehub", //workspace slug
+  workspace: "gamehub",
   debug: false,
-  timeout: 5000
+  timeout: 5000,
 });
 
 export function useVisitorCount() {
@@ -13,19 +12,18 @@ export function useVisitorCount() {
 
   useEffect(() => {
     const alreadyCounted = sessionStorage.getItem("visitor-counted");
-
     const method = alreadyCounted ? "get" : "up";
 
-    counterClient[method]("gamehub") // counter slug is also "gamehub"
+    counterClient[method]("gamehub")
       .then((res) => {
-        setCount(res.value);
+        setCount(res.value); // value must be a number
         if (!alreadyCounted) {
           sessionStorage.setItem("visitor-counted", "true");
         }
       })
       .catch((err) => {
-        console.error("Visitor count fetch failed:", err.message);
-        setCount(3); // fallback
+        console.error("Failed to fetch counter:", err);
+        setCount(0); // fallback to 0, not null
       });
   }, []);
 
