@@ -12,8 +12,6 @@ import { SpeedClicking } from './components/games/SpeedClicking';
 import { ReactionTime } from './components/games/ReactionTime';
 import { GameInfo } from './types/games';
 import { Gamepad2, Trophy, Users } from 'lucide-react';
-import { useVisitorCount } from "./hooks/useVisitorCount";
-
 
 const games: GameInfo[] = [
   {
@@ -121,7 +119,6 @@ const games: GameInfo[] = [
 function App() {
   
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
-  const visitors = useVisitorCount();
 
   const renderGame = () => {
     const onBack = () => setSelectedGame(null);
@@ -174,9 +171,6 @@ function App() {
               />
             </div>
             <h1 className="text-5xl font-bold mb-4">Subham Game Hub</h1>
-            <p className="text-blue-100 text-sm">
-              👀 Visitors: {visitors !== null ? visitors + 3 : 3}
-            </p>
 
             <p className="text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
               Challenge your friends or test your skills against intelligent computer 
