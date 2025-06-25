@@ -3,8 +3,8 @@ import { Counter } from "counterapi";
 
 const counterClient = new Counter({
   workspace: "gamehub",
-  debug: false,
-  timeout: 5000,
+  accessToken: "ut_Towy1zXqSmKRIkGf8WcZk6tpvciXXyWjAVpo6Dim", // For dev only
+  debug: true,
 });
 
 export function useVisitorCount() {
@@ -14,16 +14,23 @@ export function useVisitorCount() {
     const alreadyCounted = sessionStorage.getItem("visitor-counted");
     const method = alreadyCounted ? "get" : "up";
 
-    counterClient[method]("gamehub")
+    counterClient[method]("gamehubs")
       .then((res) => {
-        setCount(res.value); // value must be a number
+        const value = res?.data?.up_count; // ✅ Correct path
+        if (typeof value === "number") {
+          setCount(value);
+        } else {
+          console.warn("⚠ Unexpected counter format:", res);
+          setCount(0);
+        }
+
         if (!alreadyCounted) {
           sessionStorage.setItem("visitor-counted", "true");
         }
       })
       .catch((err) => {
-        console.error("Failed to fetch counter:", err);
-        setCount(0); // fallback to 0, not null
+        console.error("❌ Visitor count error:", err);
+        setCount(0);
       });
   }, []);
 

@@ -174,7 +174,7 @@ function App() {
             </div>
             <h1 className="text-5xl font-bold mb-4">Subham Game Hub</h1>
             <p className="text-blue-100 text-sm">
-              👀 Visitors: {typeof visitors === "number" ? visitors + 3 : "loading..."}
+              👀 Visitors: {typeof visitors === "number" ? visitors  : "loading..."}
             </p>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
               Challenge your friends or test your skills against intelligent computer 
