@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Counter } from "counterapi";
 
+// ✅ Create the Counter client
 const counterClient = new Counter({
-  workspace: "gamehub",
-  accessToken: "ut_Towy1zXqSmKRIkGf8WcZk6tpvciXXyWjAVpo6Dim", // For dev only
-  debug: true,
+  workspace: "gamehub",                    // your workspace slug
+  accessToken: "ut_Towy1zXqSmKRIkGf8WcZk6tpvciXXyWjAVpo6Dim", // optional, for dev
+  debug: false,
+  timeout: 5000,
 });
 
 export function useVisitorCount() {
@@ -14,13 +16,13 @@ export function useVisitorCount() {
     const alreadyCounted = sessionStorage.getItem("visitor-counted");
     const method = alreadyCounted ? "get" : "up";
 
-    counterClient[method]("gamehubs")
+    counterClient[method]("visito") // ✅ use your new counter slug here
       .then((res) => {
-        const value = res?.data?.up_count; // ✅ Correct path
+        const value = res?.data?.up_count;
         if (typeof value === "number") {
           setCount(value);
         } else {
-          console.warn("⚠ Unexpected counter format:", res);
+          console.warn("⚠ Unexpected response:", res);
           setCount(0);
         }
 
@@ -29,8 +31,8 @@ export function useVisitorCount() {
         }
       })
       .catch((err) => {
-        console.error("❌ Visitor count error:", err);
-        setCount(0);
+        console.error("❌ Visitor count error:", err.message);
+        setCount(0); // fallback if failed
       });
   }, []);
 
